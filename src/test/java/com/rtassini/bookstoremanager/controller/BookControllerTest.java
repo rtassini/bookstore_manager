@@ -70,4 +70,5 @@ public class BookControllerTest {
                 .content(asJsonString(bookDTO)))
                 .andExpect(status().isBadRequest());
     }
+
 }
