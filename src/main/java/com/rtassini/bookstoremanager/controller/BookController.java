@@ -4,6 +4,7 @@ package com.rtassini.bookstoremanager.controller;
 import com.rtassini.bookstoremanager.dto.BookDTO;
 import com.rtassini.bookstoremanager.dto.MessageResponseDTO;
 import com.rtassini.bookstoremanager.entity.Book;
+import com.rtassini.bookstoremanager.exception.BookNotFoundException;
 import com.rtassini.bookstoremanager.repository.BookRepository;
 import com.rtassini.bookstoremanager.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookDTO findById(@PathVariable Long id){
+    public BookDTO findById(@PathVariable Long id) throws BookNotFoundException {
         return  bookService.findById(id);
     }
 }

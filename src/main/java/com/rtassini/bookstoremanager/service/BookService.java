@@ -3,12 +3,12 @@ package com.rtassini.bookstoremanager.service;
 import com.rtassini.bookstoremanager.dto.BookDTO;
 import com.rtassini.bookstoremanager.dto.MessageResponseDTO;
 import com.rtassini.bookstoremanager.entity.Book;
+import com.rtassini.bookstoremanager.exception.BookNotFoundException;
 import com.rtassini.bookstoremanager.mapper.BookMapper;
 import com.rtassini.bookstoremanager.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.Optional;
 
@@ -35,8 +35,9 @@ public class BookService {
                 .build();
     }
 
-    public BookDTO findById(Long id) {
-        Optional<Book> optionalBook = this.bookRepository.findById(id);
-        return bookMapper.toDTO(optionalBook.get());
+    public BookDTO findById(Long id) throws BookNotFoundException {
+        Book book = this.bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+        return bookMapper.toDTO(book);
     }
 }
